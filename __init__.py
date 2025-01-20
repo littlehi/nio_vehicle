@@ -167,7 +167,15 @@ class NIOVehicleEntity(CoordinatorEntity):
         """Initialize the entity."""
         super().__init__(coordinator)
         self._attr_device_class = device_class
+        
+        # 保持原有的unique_id生成逻辑
         self._attr_unique_id = f"{coordinator.config_entry.data[CONF_VEHICLE_ID]}_{device_class}"
+        
+        # 获取车辆ID的最后4位作为简短标识
+        vehicle_short_id = coordinator.config_entry.data[CONF_VEHICLE_ID][-4:]
+        
+        # 设置entity_id前缀，将在子类中完成完整的entity_id
+        self.entity_id_prefix = f"nio_{vehicle_short_id}"
         
         # Set up device info
         self._attr_device_info = {

@@ -38,6 +38,7 @@ class NIOBatterySensor(NIOVehicleEntity, SensorEntity):
     def __init__(self, coordinator):
         """Initialize the sensor."""
         super().__init__(coordinator, "battery")
+        self.entity_id = f"sensor.{self.entity_id_prefix}_battery"
         self._attr_name = "电池电量 Battery Level"
         self._attr_device_class = SensorDeviceClass.BATTERY
         self._attr_state_class = SensorStateClass.MEASUREMENT
@@ -54,6 +55,7 @@ class NIORemainRangeSensor(NIOVehicleEntity, SensorEntity):
     def __init__(self, coordinator):
         """Initialize the sensor."""
         super().__init__(coordinator, "range")
+        self.entity_id = f"sensor.{self.entity_id_prefix}_range"
         self._attr_name = "预估续航里程 Remaining Range"
         self._attr_device_class = SensorDeviceClass.DISTANCE
         self._attr_state_class = SensorStateClass.MEASUREMENT
@@ -80,6 +82,7 @@ class NIOTyrePressureSensor(NIOVehicleEntity, SensorEntity):
         }
         
         self.position = position
+        self.entity_id = f"sensor.{self.entity_id_prefix}_tyre_{position}"
         self._attr_name = self._name_map[position]
         self._attr_device_class = SensorDeviceClass.PRESSURE
         self._attr_state_class = SensorStateClass.MEASUREMENT
@@ -96,6 +99,7 @@ class NIOActualRemainRangeSensor(NIOVehicleEntity, SensorEntity):
     def __init__(self, coordinator):
         """Initialize the sensor."""
         super().__init__(coordinator, "actual_range")
+        self.entity_id = f"sensor.{self.entity_id_prefix}_actual_range"
         self._attr_name = "实际续航里程 Actual Range"
         self._attr_device_class = SensorDeviceClass.DISTANCE
         self._attr_state_class = SensorStateClass.MEASUREMENT
@@ -112,10 +116,11 @@ class NIOTemperatureSensor(NIOVehicleEntity, SensorEntity):
     def __init__(self, coordinator):
         """Initialize the sensor."""
         super().__init__(coordinator, "temperature")
+        self.entity_id = f"sensor.{self.entity_id_prefix}_temperature"
         self._attr_name = "车外温度 Outside Temperature"
         self._attr_device_class = SensorDeviceClass.TEMPERATURE
         self._attr_state_class = SensorStateClass.MEASUREMENT
-        self._attr_native_unit_of_measurement = UnitOfTemperature.CELSIUS  # 使用新的温度单位常量
+        self._attr_native_unit_of_measurement = UnitOfTemperature.CELSIUS
 
     @property
     def native_value(self):

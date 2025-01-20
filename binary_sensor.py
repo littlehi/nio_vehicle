@@ -31,6 +31,7 @@ class NIODoorLockSensor(NIOVehicleEntity, BinarySensorEntity):
     def __init__(self, coordinator):
         """Initialize the sensor."""
         super().__init__(coordinator, "door_lock")
+        self.entity_id = f"binary_sensor.{self.entity_id_prefix}_lock"
         self._attr_name = "车辆锁定状态 Door Lock"
         self._attr_device_class = BinarySensorDeviceClass.LOCK
 
@@ -47,6 +48,7 @@ class NIODoorSensor(NIOVehicleEntity, BinarySensorEntity):
         """Initialize the sensor."""
         super().__init__(coordinator, f"door_{position}")
         self.position = position
+        self.entity_id = f"binary_sensor.{self.entity_id_prefix}_door_{position}"
         self._attr_name = f"Door {position.replace('_', ' ').title()}"
         self._attr_device_class = BinarySensorDeviceClass.DOOR
 
@@ -72,6 +74,7 @@ class NIOChargingPortSensor(NIOVehicleEntity, BinarySensorEntity):
     def __init__(self, coordinator):
         """Initialize the sensor."""
         super().__init__(coordinator, "charging_port")
+        self.entity_id = f"binary_sensor.{self.entity_id_prefix}_charging_port"
         self._attr_name = "充电口状态 Charging Port"
         self._attr_device_class = BinarySensorDeviceClass.DOOR
 
@@ -88,6 +91,7 @@ class NIOChargingSensor(NIOVehicleEntity, BinarySensorEntity):
     def __init__(self, coordinator):
         """Initialize the sensor."""
         super().__init__(coordinator, "charging")
+        self.entity_id = f"binary_sensor.{self.entity_id_prefix}_charging"
         self._attr_name = "充电状态 Charging"
         self._attr_device_class = BinarySensorDeviceClass.BATTERY_CHARGING
 

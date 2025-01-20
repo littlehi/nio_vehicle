@@ -27,7 +27,8 @@ class NIODeviceTracker(NIOVehicleEntity, TrackerEntity):
     def __init__(self, coordinator):
         """Initialize the tracker."""
         super().__init__(coordinator, "location")
-        self._attr_name = "Location"
+        self.entity_id = f"device_tracker.{self.entity_id_prefix}_location"
+        self._attr_name = "位置 Location"
         self._attr_unique_id = f"{coordinator.config_entry.data[CONF_VEHICLE_ID]}_location"
 
     @property
