@@ -1,0 +1,26 @@
+{
+    "config": {
+        "step": {
+            "user": {
+                "title": "连接到蔚来车辆",
+                "description": "请输入您的蔚来车辆认证信息",
+                "data": {
+                    "vehicle_id": "车辆 ID",
+                    "access_token": "访问令牌",
+                    "device_id": "设备 ID",
+                    "sign": "签名",
+                    "timestamp": "时间戳",
+                    "app_version": "APP 版本"
+                }
+            }
+        },
+        "error": {
+            "cannot_connect": "连接失败",
+            "invalid_auth": "认证无效",
+            "unknown": "意外错误"
+        },
+        "abort": {
+            "already_configured": "设备已经配置"
+        }
+    }
+}

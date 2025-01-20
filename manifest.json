@@ -1,0 +1,11 @@
+{
+    "domain": "nio_vehicle",
+    "name": "NIO Vehicle",
+    "codeowners": [],
+    "config_flow": true,
+    "documentation": "https://github.com/littlehi/nio_vehicle",
+    "integration_type": "device",
+    "iot_class": "cloud_polling",
+    "requirements": ["aiohttp"],
+    "version": "1.0.0"
+}

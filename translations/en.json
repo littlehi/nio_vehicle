@@ -1,0 +1,23 @@
+{
+    "config": {
+        "step": {
+            "user": {
+                "title": "Connect to NIO Vehicle",
+                "description": "Please enter your NIO Vehicle credentials",
+                "data": {
+                    "vehicle_id": "Vehicle ID",
+                    "access_token": "Access Token"
+                }
+            }
+        },
+        "error": {
+            "cannot_connect": "Failed to connect",
+            "invalid_auth": "Invalid authentication",
+            "invalid_response": "Invalid response from API",
+            "unknown": "Unexpected error"
+        },
+        "abort": {
+            "already_configured": "Device is already configured"
+        }
+    }
+}
