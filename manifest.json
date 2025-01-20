@@ -1,9 +1,10 @@
 {
     "domain": "nio_vehicle",
     "name": "NIO Vehicle",
-    "codeowners": [],
+    "codeowners": ["@littlehi"],
     "config_flow": true,
     "documentation": "https://github.com/littlehi/nio_vehicle",
+    "issue_tracker": "https://github.com/littlehi/nio_vehicle/issues",
     "integration_type": "device",
     "iot_class": "cloud_polling",
     "requirements": ["aiohttp"],
