@@ -59,12 +59,12 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         # Show the form to the user
         data_schema = vol.Schema({
-            vol.Required(CONF_VEHICLE_ID): str,
-            vol.Required(CONF_ACCESS_TOKEN): str,
-            vol.Required(CONF_DEVICE_ID): str,
-            vol.Required(CONF_SIGN): str,
-            vol.Required(CONF_TIMESTAMP): str,
-            vol.Optional(CONF_APP_VERSION, default=DEFAULT_APP_VERSION): str,
+            vol.Required(CONF_VEHICLE_ID, default=user_input.get(CONF_VEHICLE_ID, "") if user_input else ""): str,
+            vol.Required(CONF_ACCESS_TOKEN, default=user_input.get(CONF_ACCESS_TOKEN, "") if user_input else ""): str,
+            vol.Required(CONF_DEVICE_ID, default=user_input.get(CONF_DEVICE_ID, "") if user_input else ""): str,
+            vol.Required(CONF_SIGN, default=user_input.get(CONF_SIGN, "") if user_input else ""): str,
+            vol.Required(CONF_TIMESTAMP, default=user_input.get(CONF_TIMESTAMP, "") if user_input else ""): str,
+            vol.Required(CONF_APP_VERSION, default=user_input.get(CONF_APP_VERSION, "") if user_input else ""): str,
         })
 
         return self.async_show_form(
