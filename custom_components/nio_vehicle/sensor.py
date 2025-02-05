@@ -28,6 +28,7 @@ async def async_setup_entry(hass, entry, async_add_entities):
         NIOTyrePressureSensor(coordinator, "rear_left"),
         NIOTyrePressureSensor(coordinator, "rear_right"),
         NIOTemperatureSensor(coordinator),
+        NIOMileageSensor(coordinator),  # 添加总里程传感器
     ]
     
     async_add_entities(sensors)
@@ -126,3 +127,20 @@ class NIOTemperatureSensor(NIOVehicleEntity, SensorEntity):
     def native_value(self):
         """Return the state of the sensor."""
         return self.coordinator.data["data"]["hvac_status"]["outside_temperature"]
+
+class NIOMileageSensor(NIOVehicleEntity, SensorEntity):
+    """Representation of NIO Mileage sensor."""
+
+    def __init__(self, coordinator):
+        """Initialize the sensor."""
+        super().__init__(coordinator, "mileage")
+        self.entity_id = f"sensor.{self.entity_id_prefix}_mileage"
+        self._attr_name = "总里程 Total Mileage"
+        self._attr_device_class = SensorDeviceClass.DISTANCE
+        self._attr_state_class = SensorStateClass.TOTAL_INCREASING
+        self._attr_native_unit_of_measurement = UnitOfLength.KILOMETERS
+
+    @property
+    def native_value(self):
+        """Return the state of the sensor."""
+        return self.coordinator.data["data"]["exterior_status"]["mileage"]

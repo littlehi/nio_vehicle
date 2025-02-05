@@ -57,13 +57,13 @@ IOS 客户端操作
 5. 再次进入Stream 点击"停止抓包"
 6. 再Stream中 选择 "历史抓包"
 7. 在历史抓包记录中按照域名归类，找到icar.nio.com 记录，类似下图的记录：
-![Stream历史抓包记录](doc/images/stream-history.png)
+![Stream历史抓包记录](doc/images/stream-history.png){width=500px}
 
 8. 进入请求列表再找到如下类似记录
-![请求记录](doc/images/icar-request-01.png)
+![请求记录](doc/images/icar-request-01.png){width=500px}
 
 9. 进入请求详情，按照图示获取对应的车辆添加初始化所需的信息，特别注意这里填写访问令牌时 不要包含 Bearer
-![抓包详情](doc/images/icar-request-03.png)
+![抓包详情](doc/images/icar-request-03.png){width=500px}
 
 ## 版权和许可
 
