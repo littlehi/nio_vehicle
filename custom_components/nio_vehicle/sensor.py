@@ -29,6 +29,7 @@ async def async_setup_entry(hass, entry, async_add_entities):
         NIOTyrePressureSensor(coordinator, "rear_right"),
         NIOTemperatureSensor(coordinator),
         NIOMileageSensor(coordinator),  # 添加总里程传感器
+        NIOSwapStationCountSensor(coordinator),  # 添加换电站数量传感器
     ]
     
     async_add_entities(sensors)
@@ -144,3 +145,25 @@ class NIOMileageSensor(NIOVehicleEntity, SensorEntity):
     def native_value(self):
         """Return the state of the sensor."""
         return self.coordinator.data["data"]["exterior_status"]["mileage"]
+
+class NIOSwapStationCountSensor(NIOVehicleEntity, SensorEntity):
+    """Representation of NIO Swap Station Count sensor."""
+
+    def __init__(self, coordinator):
+        """Initialize the sensor."""
+        super().__init__(coordinator, "swap_station_count")
+        self.entity_id = f"sensor.{self.entity_id_prefix}_swap_station_count"
+        self._attr_name = "换电站数量 Swap Station Count"
+        self._attr_state_class = SensorStateClass.MEASUREMENT
+        self._attr_native_unit_of_measurement = None
+        self._attr_icon = "mdi:ev-station"
+
+    @property
+    def native_value(self):
+        """Return the state of the sensor."""
+        if (self.coordinator.swap_station_data and 
+            "data" in self.coordinator.swap_station_data and 
+            "swap_number" in self.coordinator.swap_station_data["data"]):
+            # Remove commas from the number string and convert to integer
+            return int(self.coordinator.swap_station_data["data"]["swap_number"].replace(",", ""))
+        return None

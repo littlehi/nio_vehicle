@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import logging
 import asyncio
+import time
 from datetime import timedelta
 
 import aiohttp
@@ -30,6 +31,8 @@ from .const import (
     DEFAULT_SCAN_INTERVAL,
     API_HEADERS,
     API_BASE_URL,
+    SWAP_STATION_API_URL,
+    SWAP_STATION_HEADERS,
     DEFAULT_APP_ID,
     DEFAULT_APP_VERSION,
     DEFAULT_LANGUAGE,
@@ -108,9 +111,55 @@ class NIOVehicleDataUpdateCoordinator(DataUpdateCoordinator):
         )
         self.config_entry = config_entry
         self.session = async_get_clientsession(hass)
+        self.swap_station_data = None
+        self.last_swap_station_update = None
+
+    async def _async_update_swap_station_data(self):
+        """Fetch swap station data from NIO API."""
+        try:
+            params = {
+                "app_ver": "5.2.0",
+                "client": "pc",
+                "container": "brower",
+                "lang": "zh",
+                "region": "CN",
+                "app_id": "100119",
+                "channel": "official",
+                "brand": "nio",
+                "area_code": "000000",
+                "type": "region",
+                "timestamp": str(int(time.time() * 1000))
+            }
+
+            async with async_timeout.timeout(10):
+                response = await self.session.get(
+                    SWAP_STATION_API_URL,
+                    headers=SWAP_STATION_HEADERS,
+                    params=params
+                )
+                response.raise_for_status()
+                data = await response.json()
+
+                if data.get("result_code") != "success":
+                    raise UpdateFailed("Swap station API request failed")
+
+                self.swap_station_data = data
+                self.last_swap_station_update = time.time()
+                return data
+
+        except asyncio.TimeoutError as err:
+            raise UpdateFailed("Timeout error fetching swap station data") from err
+        except (aiohttp.ClientError, KeyError) as err:
+            raise UpdateFailed(f"Error communicating with swap station API: {err}") from err
 
     async def _async_update_data(self):
         """Fetch data from NIO API."""
+        # Update swap station data if needed (once per day)
+        current_time = time.time()
+        if (self.swap_station_data is None or 
+            self.last_swap_station_update is None or 
+            current_time - self.last_swap_station_update >= 86400):  # 24 hours
+            await self._async_update_swap_station_data()
         headers = API_HEADERS.copy()
         headers["Authorization"] = f"Bearer {self.config_entry.data[CONF_ACCESS_TOKEN]}"
         headers["User-Agent"] = headers["User-Agent"].replace(

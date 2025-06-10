@@ -14,6 +14,7 @@ CONF_TIMESTAMP = "timestamp"
 
 # API Constants
 API_BASE_URL = "https://icar.nio.com/api/2/rvs/vehicle"
+SWAP_STATION_API_URL = "https://chargermap-fe-gateway.nio.com/pe/bff/gateway/powermap/h5/charge-map/v2/power/around/summary"
 API_HEADERS = {
     "Host": "icar.nio.com",
     "Connection": "keep-alive",
@@ -21,6 +22,11 @@ API_HEADERS = {
     "User-Agent": "NextevCar/5.36.1 (com.do1.WeiLaiApp; build:2291; iOS 18.3.0) Alamofire/5.9.1",
     "Accept-Language": "zh-CN,zh-Hans;q=0.9",
     "Accept-Encoding": "br;q=1.0, gzip;q=0.9, deflate;q=0.8"
+}
+SWAP_STATION_HEADERS = {
+    "Accept": "application/json,text/json,text/plain",
+    "User-Agent": "Mozilla/5.0",
+    "Accept-Language": "zh-CN,zh-Hans;q=0.9"
 }
 
 # Device Info
